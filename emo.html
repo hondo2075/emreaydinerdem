@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Özel Web Sitesi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #FFD700; 
+            font-weight:bold; 
+
+            
+            /* ARKA PLAN FOTOĞRAF KISMI */
+            background-image: url(arkaplan.jpg); /* Kendi dosya adınızla değiştirin! */
+            background-size: cover; 
+            background-attachment: fixed; 
+            background-position: center center; 
+            background-repeat: no-repeat; 
+            
+            position: relative;
+        }
+
+        /* MESAJ KUTUSU STİLİ */
+        #mesajKutusu {
+            /* KONUM AYARLARI: Buradan yerini değiştirirsiniz. */
+            position: absolute; 
+            top: 300px; /* Üst kenardan 100 piksel aşağıda */
+            left: 70.85%; /* Sol kenardan %50 uzaklıkta */
+            transform: translateX(-50%); /* Kutuyu yatayda merkeze kaydırır */
+
+            /* GÖRÜNÜM AYARLARI */
+            width: 80%;
+            max-width: 420px;
+            max-height: 120px;
+            padding: 25px;
+            background-color: #004ba0; /* Yarı saydam siyah arka plan */
+            border: 3px solid #FFD700; /* Altın rengi çerçeve */
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 181, 236, 0.6);
+            text-align: center;
+            z-index: 20;
+        }
+
+        #mesajKutusu h2 {
+            margin-top: 0;
+            color: #FFD700; /* Başlık rengi */
+        }
+        
+        #sesiBaslatButonu {
+            padding: 31px 35px;
+            font-size: 1.1em;
+            background-color: rgb(255, 251, 0);
+            color: rgb(252, 30, 1);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: -200px;
+            margin-top: -68px;
+            display: none; /* Başlangıçta gizli */
+        }
+        
+        /* Arka plan üzerindeki yazıların daha okunaklı olması için */
+        p {
+            text-shadow: 1px 1px 2px #000;
+        }
+
+    </style>
+</head>
+<body> 
+
+    <audio id="arkaPlanSesi" loop autoplay>
+        <source src=emo2.mp3 type="audio/mpeg">
+        Tarayıcınız ses dosyasını desteklemiyor.
+    </audio>
+
+    <div id="mesajKutusu">
+        <h2>EMODOĞUMGUNUNKUTLUOLSUN</h2>
+        <p>Emo 18 oldun lan artık reşitsin manyak adam bizi unutma kafana vururuz</p>
+        <p style="font-style: italic;"> İyiki doğdun lan pandaman</p>
+        <button id="sesiBaslatButonu">BASMA EMO</button>
+    </div>
+
+    <script>
+        const audio = document.getElementById('arkaPlanSesi');
+        const baslatButonu = document.getElementById('sesiBaslatButonu');
+
+        // Otomatik oynatmayı dene
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Oynatma başarılı. Herhangi bir şey yapmaya gerek yok.
+            }).catch(error => {
+                // Oynatma engellendi. Kullanıcıya butonu göster.
+                console.log("Ses otomatik oynatılmadı. Kullanıcı etkileşimi gerekiyor.");
+                baslatButonu.style.display = 'block';
+            });
+        }
+
+        // Buton tıklandığında ses çalma işlevini ekle
+        baslatButonu.addEventListener('click', function() {
+            audio.play();
+            baslatButonu.style.display = 'none'; // Ses çalmaya başladıktan sonra butonu gizle
+        });
+    </script>
+
+</body>
+</html>
