@@ -84,26 +84,68 @@
     </div>
 
     <script>
+      // --- KONFETİ KÜTÜPHANESİ YÜKLEME ---
+        const confettiScript = document.createElement('script');
+        confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+        document.head.appendChild(confettiScript);
+        // ------------------------------------
+
         const audio = document.getElementById('arkaPlanSesi');
         const baslatButonu = document.getElementById('sesiBaslatButonu');
 
-        // Otomatik oynatmayı dene
+        // Otomatik oynatmayı dene (Ses Engelleme Kontrolü)
         const playPromise = audio.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
-                // Oynatma başarılı. Herhangi bir şey yapmaya gerek yok.
+                // Oynatma başarılıysa
             }).catch(error => {
-                // Oynatma engellendi. Kullanıcıya butonu göster.
-                console.log("Ses otomatik oynatılmadı. Kullanıcı etkileşimi gerekiyor.");
+                // Oynatma engellendiyse, butonu göster
                 baslatButonu.style.display = 'block';
             });
         }
 
-        // Buton tıklandığında ses çalma işlevini ekle
+        // Buton tıklandığında ses çalma ve KONFETİ İŞLEVİ
         baslatButonu.addEventListener('click', function() {
             audio.play();
-            baslatButonu.style.display = 'none'; // Ses çalmaya başladıktan sonra butonu gizle
+            
+            // ** KONFETİ EFEKTİ **
+            // Konfeti fonksiyonu yüklendiyse çalıştır.
+             if (typeof confetti === 'function') {
+            
+            // Konfeti için temel ayarlar
+            const defaults = {
+                particleCount: 1500, // Her patlamadaki parçacık sayısı
+                spread: 90,         // Yayılım açısı
+                ticks: 3000,         // Parçacıkların havada kalma süresi
+                decay: 0.9          // Yavaşlama hızı
+            };
+            
+            // Sol üst köşeden patlat
+            confetti({
+                ...defaults,
+                particleCount: 1500, // Sol taraf daha yoğun olsun
+                spread: 360, // Sol taraftan aşağı ve yana yayılsın
+                origin: { x: 0.0, y: 0.3 } // X:0.0 (Sol kenar), Y:0.3 (Yukarıdan biraz aşağı)
+            });
+             confetti({
+                ...defaults,
+                particleCount: 1500, // Sol taraf daha yoğun olsun
+                spread: 360, // Sol taraftan aşağı ve yana yayılsın
+                origin: {  y: 0.45 } // X:0.0 (Sol kenar), Y:0.3 (Yukarıdan biraz aşağı)
+            });
+            
+            // Sağ üst köşeden patlat
+            confetti({
+                ...defaults,
+                particleCount: 1500, // Sağ taraf da yoğun olsun
+                spread: 360, // Sağ taraftan aşağı ve yana yayılsın
+                origin: { x: 1.0, y: 0.3 } // X:1.0 (Sağ kenar), Y:0.3 (Yukarıdan biraz aşağı)
+            });
+        }
+            // *******************
+
+            baslatButonu.style.display = 'none'; // Butonu gizle
         });
     </script>
 
